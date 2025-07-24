@@ -992,18 +992,20 @@ Coming soon
 
 - **What is the difference between Predictive/Discriminative AI and Generative AI?**
 - **What is LLM, and how are LLMs trained?**
-- **Explain the Temperature parameter and how to set it**
-- **What are different decoding strategies for tokens?**
-- **Stopping criteria definition methods**
+- **What is a token in the language model?**
+- **How to estimate the cost of running SaaS-based and Open Source LLM models?**
+- **Explain the Temperature parameter and how to set it.**
+- **What are different decoding strategies for picking output tokens?**
+- **What are different ways you can define stopping criteria in large language model?**
 - **How to use stop sequences in LLMs?**
-- **Basic structure of prompt engineering**
+- **Explain the basic structure prompt engineering.**
 - **Explain in-context learning**
-- **Types of prompt engineering**
-- **Aspects to keep in mind with few-shots prompting**
-- **Strategies to write effective prompts**
-- **Hallucination control via prompts**
-- **Improving reasoning through prompts**
-- **Solution when COT prompt fails**
+- **Explain type of prompt engineering**
+- **What are some of the aspect to keep in mind while using few-shots prompting?**
+- **What are certain strategies to write good prompt?**
+- **What is hallucination, and how can it be controlled using prompt engineering?**
+- **How to improve the reasoning ability of LLM through prompt engineering?**
+- **How to improve LLM reasoning if your COT prompt fails?**
 
 [View Full Document →](/docs/prompt_engineering_basics)
 
@@ -1014,11 +1016,11 @@ Coming soon
 <details>
 <summary>View Questions</summary>
 
-- **Increase accuracy & reliability in LLM**
-- **How RAG works?**
-- **Benefits of RAG systems**
-- **Fine-tuning vs RAG selection**
-- **LLM customization patterns**
+- **how to increase accuracy, and reliability & make answers verifiable in LLM**
+- **How does RAG work?**
+- **What are some benefits of using the RAG system?**
+- **When should I use Fine-tuning instead of RAG?**
+- **What are the architecture patterns for customizing LLM with proprietary data?**
 
 [View Full Document →](/docs/rag_systems)
 
@@ -1029,16 +1031,16 @@ Coming soon
 <details>
 <summary>View Questions</summary>
 
-- **What is chunking and why needed**
-- **Factors influencing chunk size**
-- **Different chunking methods**
-- **Finding ideal chunk size**
-- **Digitizing complex documents**
-- **Handling tables during chunking**
-- **Retrieval optimization for large tables**
-- **List item processing techniques**
-- **Production document pipelines**
-- **Handling graphs & charts in RAG**
+- **What is chunking, and why do we chunk our data?**
+- **What factors influence chunk size?**
+- **What are the different types of chunking methods?**
+- **How to find the ideal chunk size?**
+- **What is the best method to digitize and chunk complex documents like annual reports?**
+- **How to handle tables during chunking?**
+- **How do you handle very large table for better retrieval?**
+- **How to handle list item during chunking?**
+- **How do you build production grade document processing and indexing pipeline?**
+- **How to handle graphs & charts in RAG**
 
 [View Full Document →](/docs/document_processing)
 
@@ -1049,12 +1051,12 @@ Coming soon
 <details>
 <summary>View Questions</summary>
 
-- **Vector embeddings basics**
-- **Embedding model usage in LLM apps**
-- **Short vs long content embedding**
-- **Benchmarking embedding models**
-- **Improving low-accuracy embedding model**
-- **Enhancing sentence transformers**
+- **What are vector embeddings, and what is an embedding model?**
+- **How is an embedding model used in the context of LLM applications?**
+- **What is the difference between embedding short and long content?**
+- **How to benchmark embedding models on your data?**
+- **Suppose you are working with an open AI embedding model, after benchmarking accuracy is coming low, how would you further improve the accuracy of embedding the search model?**
+- **Walk me through steps of improving sentence transformer model used for embedding?**
 
 [View Full Document →](/docs/embedding_models)
 
