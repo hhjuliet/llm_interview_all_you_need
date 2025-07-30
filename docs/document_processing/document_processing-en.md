@@ -62,6 +62,109 @@ Five principal chunking strategies with distinct use cases:
    - Adds 10–15% token overlap between consecutive chunks.  
    - *Use Case*: Mitigates context fragmentation at boundaries.  
    - *Trade-off*: Increases index size by ~20%.  
+### Examples of Different Chunking Methods
+
+### 1. Fixed-Size Chunking (512 tokens)
+**Document:** Research paper on climate change (3,200 tokens)  
+**Chunking Process:**  
+```
+Chunk 1: Tokens 1-512 (Introduction section)  
+Chunk 2: Tokens 513-1024 (Methodology part A)  
+Chunk 3: Tokens 1025-1536 (Methodology part B)  
+Chunk 4: Tokens 1537-2048 (Results section)  
+Chunk 5: Tokens 2049-2560 (Discussion part A)  
+Chunk 6: Tokens 2561-3072 (Discussion part B)  
+Chunk 7: Tokens 3073-3200 (Conclusion)
+```
+**Notice:** Methodology section split unnaturally between chunks 2 and 3
+
+### 2. Semantic Boundary Chunking
+**Document:** Technical documentation with headings  
+**Chunking Process:**  
+```
+# API Reference
+Chunk 1: [Heading-based chunk]
+Endpoint: /users  
+Methods: GET, POST  
+Parameters: limit, offset  
+
+# Authentication
+Chunk 2: [Heading-based chunk]
+OAuth2 flow requires...  
+
+## JWT Tokens
+Chunk 3: [Subheading-based chunk]
+Token expiration: 3600s...
+
+# Error Codes
+Chunk 4: [Heading-based chunk]
+400: Invalid request...
+```
+**Notice:** Chunks respect heading hierarchy (H1 → H2)
+
+### 3. Recursive Chunking
+**Document:** Legal contract (Section → Paragraph → Sentence)  
+**Chunking Process:**  
+```
+Stage 1: Split by sections
+[Chunk A: Definitions]  
+[Chunk B: Obligations]  
+[Chunk C: Termination]
+
+Stage 2: Split Chunk B by paragraphs
+[Chunk B1: Payment Terms]  
+[Chunk B2: Delivery Schedule]  
+[Chunk B3: Quality Standards]
+
+Stage 3: Split Chunk B1 by sentences
+[Chunk B1a: "Payments due net 30..."]  
+[Chunk B1b: "Late payments incur 1.5% monthly interest..."]
+```
+**Notice:** Hierarchical splitting preserves context at each level
+
+### 4. Content-Aware Chunking
+**Document:** Software documentation with code snippets  
+**Chunking Process:**  
+```
+[Text chunk]  
+To install the package:  
+
+[Code chunk - preserved intact]  
+pip install -r requirements.txt  
+npm install package-name  
+
+[Text chunk]  
+Configuration requires:  
+
+[List chunk - preserved intact]  
+1. Set API_KEY environment variable  
+2. Configure database settings  
+3. Enable security protocols  
+
+[Table chunk - preserved intact]  
+| Setting    | Default | Required |  
+|------------|---------|----------|  
+| timeout    | 30s     | No       |  
+| retries    | 3       | Yes      |
+```
+**Notice:** Different element types handled appropriately
+
+### 5. Sliding Window Chunking (with 20% overlap)
+**Document:** Novel chapter  
+**Chunking Process:**  
+```
+Chunk 1 (Tokens 1-500):  
+"The moon cast long shadows... [story continues]"  
+
+Chunk 2 (Tokens 400-900):  
+"...continued from previous chunk [overlap]... 
+The character entered the dark forest..."  
+
+Chunk 3 (Tokens 800-1300):  
+"...forest path wound deeper [overlap]... 
+A mysterious figure appeared suddenly..."
+```
+**Notice:** Overlapping tokens ensure context continuity at boundaries
 
 ---
 
@@ -91,6 +194,53 @@ Employ iterative, metrics-driven testing:
    - When small chunks yield high recall but poor answer quality:  
      - Use 256–512 token chunks for retrieval.  
      - Expand to parent 1024-token chunks during synthesis.  
+
+### Hybrid Chunk Size Strategy Example
+
+### Scenario Background
+Medical knowledge base Q&A system, user query:  
+"What are the contraindications for beta-blockers in treating angina?"
+
+### Problem with Small Chunk Strategy (256 tokens)
+**Retrieval Results**:  
+1. Chunk A (256t): "Beta-blockers reduce myocardial oxygen demand by lowering heart rate..."  
+2. Chunk B (256t): "Common contraindications include bradycardia (HR<50bpm)..."  
+3. Chunk C (256t): "Contraindicated in bronchial asthma as may induce bronchospasm..."  
+
+**LLM Generated Answer**:  
+"Contraindications: bradycardia, bronchial asthma"  
+*Problem: Misses critical contraindications (hypotension, heart failure) as relevant chunks weren't retrieved*
+
+### Hybrid Size Strategy Implementation
+
+#### Step 1: Hierarchical Chunk Storage
+```
+# Document preprocessing example
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+# Small chunks (for retrieval)
+small_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=256,
+    chunk_overlap=25
+)
+
+# Large chunks (for generation)
+large_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1024,
+    chunk_overlap=100
+)
+
+# Create mapping
+chunk_mapping = {}
+for doc in documents:
+    small_chunks = small_splitter.split_text(doc.content)
+    large_chunks = large_splitter.split_text(doc.content)
+    
+    # Map small→parent chunks
+    for small in small_chunks:
+        parent = find_parent_chunk(small, large_chunks)
+        chunk_mapping[small.id] = parent.id
+```
 
 **Toolkit**: `chroma` (testing), `llama-index` (experimentation), `ragas` (evaluation).  
 
