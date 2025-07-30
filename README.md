@@ -429,18 +429,19 @@
 <summary>View Questions</summary>
 
 - **What is a vector database?**
-- **Vector DB vs traditional DB**
-- **Vector index vs DB vs plugins**
-- **High-precision search strategy**
-- **Clustering & LSH strategies**
-- **Clustering mechanism and limits**
-- **Random projection index**
-- **Locality-sensitive hashing (LSH)**
-- **Product quantization (PQ)**
-- **Comparing vector indexes**
-- **Selecting similarity metrics**
-- **Filtering challenges**
-- **Choosing vector databases**
+- **How does a vector database differ from traditional databases?**
+- **How does a vector database work?**
+- **Explain difference between vector index, vector DB & vector plugins?**
+- **You are working on a project that involves a small dataset of customer reviews. Your task is to find similar reviews in the dataset. The priority is to achieve perfect accuracy in finding the most similar reviews, and the speed of the search is not a primary concern. Which search strategy would you choose and why?**
+- **Explain vector search strategies like clustering and Locality-Sensitive Hashing.**
+- **How does clustering reduce search space? When does it fail and how can we mitigate these failures?**
+- **Explain Random projection index?**
+- **Explain Locality-sensitive hashing (LHS) indexing method?**
+- **Explain product quantization (PQ) indexing method?**
+- **Compare different Vector index and given a scenario, which vector index you would use for a project?**
+- **How would you decide ideal search similarity metrics for the use case?**
+- **Explain different types and challenges associated with filtering in vector DB?**
+- **How to decide the best vector database for your needs?**
 
 [View Full Document →](/docs/vector_databases)
 
@@ -451,20 +452,20 @@
 <details>
 <summary>View Questions</summary>
 
-- **IR & semantic search patterns**
-- **Importance of quality search**
-- **Efficient large-scale search**
-- **Improving inaccurate RAG retrieval**
-- **Keyword-based retrieval**
-- **Fine-tuning re-ranking models**
-- **Common IR metrics & limitations**
-- **Metric for Quora-like systems**
-- **Recommendation system metrics**
-- **IR metric comparison**
-- **Hybrid search mechanics**
-- **Merging multi-source results**
-- **Multi-hop query handling**
-- **Techniques to improve retrieval**
+- **What are architecture patterns for information retrieval & semantic search?**
+- **Why it’s important to have very good search**
+- **How can you achieve efficient and accurate search results in large-scale datasets?**
+- **Consider a scenario where a client has already built a RAG-based system that is not giving accurate results, upon investigation you find out that the retrieval system is not accurate, what steps you will take to improve it?**
+- **Explain the keyword-based retrieval method**
+- **How to fine-tune re-ranking models?**
+- **Explain most common metric used in information retrieval and when it fails?**
+- **If you were to create an algorithm for a Quora-like question-answering system, with the objective of ensuring users find the most pertinent answers as quickly as possible, which evaluation metric would you choose to assess the effectiveness of your system?**
+- **I have a recommendation system, which metric should I use to evaluate the system?**
+- **Compare different information retrieval metrics and which one to use when?**
+- **How does hybrid search works?**
+- **If you have search results from multiple methods, how would you merge and homogenize the rankings into a single result set?**
+- **How to handle multi-hop/multifaceted queries?**
+- **What are different techniques to be used to improved retrieval?**
 
 [View Full Document →](/docs/search_algorithms)
 
@@ -475,17 +476,17 @@
 <details>
 <summary>View Questions</summary>
 
-- **Detailed self-attention explanation**
-- **Disadvantages of self-attention**
-- **Positional encoding explained**
-- **Transformer architecture details**
-- **Transformer advantages over LSTM**
-- **Local vs global attention**
-- **Transformer optimization techniques**
-- **Extending LLM context length**
-- **Optimizing for large vocabularies**
-- **Balancing vocabulary size**
-- **LLM architectures & best tasks**
+- **Can you provide a detailed explanation of the concept of self-attention?**
+- **Explain the disadvantages of the self-attention mechanism and how can you overcome it.**
+- **What is positional encoding?**
+- **Explain Transformer architecture in detail.**
+- **What are some of the advantages of using a transformer instead of LSTM?**
+- **What is the difference between local attention and global attention?**
+- **What makes transformers heavy on computation and memory, and how can we address this?**
+- **How can you increase the context length of an LLM?**
+- **If I have a vocabulary of 100K words/tokens, how can I optimize transformer architecture?**
+- **A large vocabulary can cause computation issues and a small vocabulary can cause OOV issues, what approach you would use to find the best balance of vocabulary?**
+- **Explain different types of LLM architecture and which type of architecture is best for which task?**
 
 [View Full Document →](/docs/llm_internals)
 
@@ -496,17 +497,17 @@
 <details>
 <summary>View Questions</summary>
 
-- **Fine-tuning concepts & needs**
-- **Scenarios requiring fine-tuning**
-- **Making fine-tuning decisions**
-- **Context-sufficient answering**
-- **Creating Q&A datasets**
-- **Hyperparameter configuration**
-- **Infrastructure estimation**
-- **Consumer hardware fine-tuning**
-- **PEFT method categories**
-- **Catastrophic forgetting**
-- **Re-parameterized methods**
+- **What is fine-tuning, and why is it needed?**
+- **Which scenario do we need to fine-tune LLM?**
+- **How to make the decision of fine-tuning?**
+- **How do you improve the model to answer only if there is sufficient context for doing so?**
+- **How to create fine-tuning datasets for Q&A?**
+- **How to set hyperparameters for fine-tuning?**
+- **How to estimate infrastructure requirements for fine-tuning LLM?**
+- **How do you fine-tune LLM on consumer hardware?**
+- **What are the different categories of the PEFT method?**
+- **What is catastrophic forgetting in LLMs?**
+- **What are different re-parameterized methods for fine-tuning?**
 
 [View Full Document →](/docs/fine_tuning)
 
@@ -517,10 +518,10 @@
 <details>
 <summary>View Questions</summary>
 
-- **SFT vs preference alignment**
-- **RLHF mechanisms & applications**
-- **Reward hacking in RLHF**
-- **Preference alignment methods**
+- **At which stage you will decide to go for the Preference alignment type of method rather than SFT?**
+- **What is RLHF, and how is it used?**
+- **What is the reward hacking issue in RLHF?**
+- **Explain different preference alignment methods.**
 
 [View Full Document →](/docs/preference_alignment)
 
@@ -531,10 +532,10 @@
 <details>
 <summary>View Questions</summary>
 
-- **Evaluating best LLM for task**
-- **Assessing RAG systems**
-- **Metrics for LLM evaluation**
-- **Chain of Verification explained**
+- **How do you evaluate the best LLM model for your use case?**
+- **How to evaluate RAG-based systems?**
+- **What are different metrics for evaluating LLMs?**
+- **Explain the Chain of Verification.**
 
 [View Full Document →](/docs/llm_evaluation)
 
@@ -545,8 +546,8 @@
 <details>
 <summary>View Questions</summary>
 
-- **Forms of hallucinations**
-- **Controlling at various levels**
+- **What are different forms of hallucinations?**
+- **How to control hallucinations at various levels?**
 
 [View Full Document →](/docs/hallucination_control)
 
