@@ -23,6 +23,19 @@ Embedding models are trained using techniques like:
 loss = max(0, margin - sim(anchor, positive) + sim(anchor, negative))
 ```
 
+| Technique         | Input Format             | Primary Optimization Goal                                          | Typical Application Scenarios          | Key Characteristics                        |
+| :---------------- | :---------------------- | :----------------------------------------------------------------- | :------------------------------------- | :---------------------------------------- |
+| **Contrastive Learning** | (Anchor, Positive, Negative) pairs | **Increase** Anchor-Positive similarity, **Decrease** Anchor-Negative similarity | General similarity learning, Text/Image representation | Relies on constructing positive/negative pairs |
+| **Masked Language Modeling (MLM)** | Input sequence with ```[MASK]``` tokens | **Predict** the masked words                                         | Pretraining language models, Context-dependent word/sentence embeddings | Self-supervised, Leverages bidirectional context |
+| **Triplet Loss**  | (Anchor, Positive, Negative) triplets | **Minimize** Anchor-Positive distance, **Maximize** Anchor-Negative distance (enforces minimum ```margin```) | Image retrieval, Face recognition, Fine-grained ranking | Directly optimizes relative distances, Requires hard sample mining |
+
+
+| 技术                  | 输入形式                      | 主要优化目标                                                                 | 典型应用场景                                     | 关键特点                                         |
+| :-------------------- | :-------------------------- | :--------------------------------------------------------------------------- | :--------------------------------------------- | :--------------------------------------------- |
+| **对比学习 (Contrastive Learning)** | （锚点，正样本，负样本）对          | **增大**锚点与正样本的相似度，**减小**锚点与负样本的相似度                                   | 通用相似性学习、文本/图像表征                          | 依赖正负样本对的构建                                 |
+| **掩码语言建模 (Masked Language Modeling, MLM)** | 包含 ~[MASK]~ 标记的输入序列     | **预测**被掩码掉的原词                                                         | 预训练语言模型、上下文相关的词/句嵌入                      | 自监督、利用双向上下文                               |
+| **三元组损失 (Triplet Loss)** | （锚点，正样本，负样本）三元组        | **最小化**锚点与正样本的距离，**最大化**锚点与负样本的距离 (强制保持最小 ~margin~ 边界值)          | 图像检索、人脸识别、细粒度排序                         | 直接优化相对距离、需要难样本挖掘 (`Hard Sample Mining`) |
+
 # How is an embedding model used in the context of LLM applications?
 
 Embedding models enable five critical functions in LLM systems:
