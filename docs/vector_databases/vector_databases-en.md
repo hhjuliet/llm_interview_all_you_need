@@ -482,3 +482,13 @@ graph LR
     G[>10M] --> H[Pinecone]
     G --> I[Milvus]
 ```
+
+### Horizontal Comparison
+
+| **Database** | **Scalability**          | **Performance**                    | **Key Features**                                  | **Best For**                       |
+| ------------ | ------------------------ | ---------------------------------- | ------------------------------------------------- | ---------------------------------- |
+| **Milvus**   | ★★★★☆ (Billion+ vectors) | 100-500 QPS (2000 万 768 维向量) 3 | Multi-index (HNSW/IVF), GPU 加速, 分布式架构      | 企业级大规模 AI 系统、多模态搜索   |
+| **Qdrant**   | ★★★★☆ (100M+ vectors)    | 100-400 QPS (2000 万向量) 3        | Rust 开发, 实时更新, 强过滤支持, REST/gRPC API    | RAG 系统、实时推荐、结构化数据检索 |
+| **Pinecone** | ★★★☆☆ (Managed 云服务)   | 低延迟 (托管优化) 1                | 全托管服务, 单阶段元数据过滤, 无缝云集成          | 快速部署生产级推荐系统/语义搜索    |
+| **Weaviate** | ★★★☆☆ (10M-100M)         | 中等延迟 5                         | 混合检索(向量+关键词), GraphQL 接口, 知识图谱支持 | 语义搜索、复杂查询场景             |
+| **Chroma**   | ★☆☆☆☆ (<1M 向量)         | 轻量级快速原型 6                   | Python 嵌入式, LangChain 集成, 简单 API           | 原型开发/POC、小型项目             |
