@@ -339,9 +339,17 @@ For each subspace:
 3. IVF provides fast approximate search
 4. Supports incremental updates
 
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)
+![img_4.png](img_4.png)
+
 # How would you decide ideal search similarity metrics for the use case?
 
 Use this decision framework:
+
+![img_6.png](img_6.png)
 
 ```
 Step 1: Data Modality Analysis
@@ -378,18 +386,21 @@ graph TD
    Apply metadata filters → Vector search on subset
    ```
    Challenge: May exclude relevant vectors
+![img_7.png](img_7.png)
 
 2. **Post-Filtering**:
    ```
    Vector search → Apply metadata filters
    ```
    Challenge: May return insufficient results
+![img_8.png](img_8.png)
 
 3. **Single-Stage Filtering**:
    ```
    Integrated during ANN search
    ```
    Challenge: Implementation complexity
+![img_9.png](img_9.png)
 
 ### Key Challenges
 1. **Filter Cardinality Impact**:
@@ -410,6 +421,35 @@ graph TD
    ```
    score = α•similarity + β•filter_match
    ```
+
+sample search engine code:
+```python
+
+# 电商搜索完整流程
+def search_products(query, filters):
+    # 1. 查询理解
+    query_vector = embed_text(query)
+    
+    # 2. 混合过滤
+    low_cardinality_ids = apply_filters(get_low_cardinality_filters(filters))
+    
+    # 3. 带过滤的向量搜索
+    vector_results = vector_search(
+        query_vector, 
+        subset_ids=low_cardinality_ids,
+        top_k=1000
+    )
+    
+    # 4. 应用高基数过滤
+    filtered_results = apply_high_cardinality_filters(vector_results, filters)
+    
+    # 5. 综合排序
+    ranked_results = ranking_model.sort(filtered_results)
+    
+    # 6. 结果后处理
+    return paginate_results(ranked_results)
+
+```
 
 # How to decide the best vector database for your needs?
 
