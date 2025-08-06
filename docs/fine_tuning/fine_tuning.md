@@ -409,8 +409,7 @@ trainer.train()
 Parameter-Efficient Fine-Tuning (PEFT) methods modify minimal parameters while maintaining performance. They fall into four primary categories:
 
 1.  **Additive Methods**  
-    Introduce new trainable parameters while freezing original weights:  
-    ``
+    ``Introduce new trainable parameters while freezing original weights: ``
     -   `Adapter Layers`: Small feed-forward networks inserted between transformer layers  
         - *Houlsby Style`: Sequential adapter layers (adds ~2-4% params)  
         - *Parallel Adapters`: Single parallel layer per block (0.5-2% params)  
@@ -419,23 +418,20 @@ Parameter-Efficient Fine-Tuning (PEFT) methods modify minimal parameters while m
     -   `(IA)^3`: Trainable scaling vectors for key/value activations  
 
 2.  **Selective Methods**  
-    Update specific parameter subsets:  
-    ``
+    ``Update specific parameter subsets:``
     -   `BitFit`: Train only bias parameters (~0.1% of total)  
     -   `Layer-Selective Tuning`: Update only first/last N layers  
     -   `Attention-Only Tuning`: Modify only Q/K/V projection matrices  
 
 3.  **Reparameterization Methods**  
-    Project weight updates to low-rank spaces:  
-    ``
+    ``Project weight updates to low-rank spaces:``
     -   `LoRA`: `\Delta W = BA` where rank `r \ll \min(d,k)`  
     -   `AdaLoRA`: Adaptive SVD-based budget allocation  
     -   `DoRA`: Weight decomposition `W = m \frac{V}{`|V|_c`}` + directional LoRA  
     -   `QLoRA`: 4-bit quantized base weights + LoRA  
 
 4.  **Hybrid Methods**  
-    Combine multiple PEFT approaches:  
-    ``
+    ``Combine multiple PEFT approaches:``
     -   `UniPELT`: Gated fusion of Adapters/Prefix/LoRA  
     -   `MAM Adapter`: Hybrid serial-parallel adapters with LoRA  
 
