@@ -176,16 +176,16 @@ if not context.has_cited_sources():
 Creating high-quality question-answering datasets involves systematic data collection, curation, and formatting:
 
 1.  **Define Task Scope:**
-    *   Determine Q&A type: ··Open-domain·· (general knowledge), ··Closed-domain·· (specific context), ··Extractive·· (answers from text), or ··Generative·· (free-form answers).
+    *   Determine Q&A type: ``Open-domain`` (general knowledge), ``Closed-domain`` (specific context), ``Extractive`` (answers from text), or ``Generative`` (free-form answers).
     *   Set requirements: Answer length, citation needs, and domain specialization.
 
 2.  **Data Collection Strategies:**
-    *   ··Public Datasets··: Curate from existing resources (SQuAD, Natural Questions, CoQA) with proper licensing.
-    *   ··Synthetic Generation··: Use LLMs (e.g., GPT-4) to:
-        - ··Question Generation··: Feed context passages → output Q&A pairs
-        - ··Answer Generation··: Provide (context + question) → generate answers
-        - ··Data Augmentation··: Paraphrase existing Q&As
-    *   ··Human Annotation··:
+    *   ``Public Datasets``: Curate from existing resources (SQuAD, Natural Questions, CoQA) with proper licensing.
+    *   ``Synthetic Generation``: Use LLMs (e.g., GPT-4) to:
+        - ``Question Generation``: Feed context passages → output Q&A pairs
+        - ``Answer Generation``: Provide (context + question) → generate answers
+        - ``Data Augmentation``: Paraphrase existing Q&As
+    *   ``Human Annotation``:
         - **Expert Creation**: Domain specialists write context + Q&As
         - **Convert Documents**: Annotators create Q&As from internal docs (PDFs, wikis)
         - **Adversarial Examples**: Include hard negatives to improve robustness
@@ -205,13 +205,13 @@ Creating high-quality question-answering datasets involves systematic data colle
 }
 ```
 
-*   For generative tasks, include ··instruction templates··: 
-    `### Instruction: {question} ···n### Context: {context} ···n### Response: {answer}`
+*   For generative tasks, include ``instruction templates``: 
+    `### Instruction: {question} ```n### Context: {context} ```n### Response: {answer}`
 
 4.  **Quality Control:**
-*   ··Filtering··: Remove low-quality samples (typos, unanswerable questions)
-*   ··Validation··: Human review for accuracy and relevance (e.g., 10% sample)
-*   ··Debiasing··: Balance question types and demographics
+*   ``Filtering``: Remove low-quality samples (typos, unanswerable questions)
+*   ``Validation``: Human review for accuracy and relevance (e.g., 10% sample)
+*   ``Debiasing``: Balance question types and demographics
 
 5.  **Tooling:**
 *   Label Studio / Prodigy for annotation
@@ -224,40 +224,40 @@ Creating high-quality question-answering datasets involves systematic data colle
 
 Hyperparameter optimization requires balancing performance, speed, and resource limits:
 
-1.  ··Learning Rate (Most Critical)··:
-*   ··Range··: 1e-6 to 5e-5 for full fine-tuning; 1e-4 to 1e-3 for LoRA
-*   ··Strategies··:
+1.  ``Learning Rate (Most Critical)``:
+*   ``Range``: 1e-6 to 5e-5 for full fine-tuning; 1e-4 to 1e-3 for LoRA
+*   ``Strategies``:
     - **Linear Decay**: Start high → reduce over steps
     - **Warmup**: Gradually increase LR (first 3-10% of steps)
 
-2.  ··Batch Size··:
+2.  ``Batch Size``:
 *   Max GPU-memory allows (use gradient accumulation for larger effective batches)
-*   ··Recommendations··: 16-128 for consumer GPUs; 256-1024 for data centers
+*   ``Recommendations``: 16-128 for consumer GPUs; 256-1024 for data centers
 
-3.  ··Epochs··:
+3.  ``Epochs``:
 *   Domain adaptation: 1-3 epochs
 *   Drastic task changes: 5-10 epochs
 *   **Early Stopping**: Monitor validation loss (patience=2-3 epochs)
 
-4.  ··Optimizer Choice··:
+4.  ``Optimizer Choice``:
 *   `AdamW`: Default choice (weight decay=0.01)
 *   `bitsandbytes` AdamW 8-bit: For memory efficiency
 
-5.  ··Parameter-Efficient Methods··:
+5.  ``Parameter-Efficient Methods``:
 *   **LoRA Settings**: 
-    ··Rank·· (8-64), ··alpha·· (16-64), target modules (`q_proj`, `v_proj`)
-*   ··QLoRA··: 4-bit quantization + LoRA (NF4 dtype)
+    ``Rank`` (8-64), ``alpha`` (16-64), target modules (`q_proj`, `v_proj`)
+*   ``QLoRA``: 4-bit quantization + LoRA (NF4 dtype)
 
-6.  ··Regularization··:
+6.  ``Regularization``:
 *   Dropout: 0.1-0.3
 *   Weight Decay: 0.01-0.1
 
 **Tuning Workflow:**
-1. Start with ··recommended defaults·· (e.g., HuggingFace Trainer presets)
-2. Run ··learning rate sweep·· (LR range test)
-3. Scale ··batch size·· until GPU OOM, then use gradient accumulation
-4. Use ··Bayesian optimization·· (Optuna, Ray Tune) for >3 hyperparameters
-5. ··Validate every 500 steps·· with 10% holdout data
+1. Start with ``recommended defaults`` (e.g., HuggingFace Trainer presets)
+2. Run ``learning rate sweep`` (LR range test)
+3. Scale ``batch size`` until GPU OOM, then use gradient accumulation
+4. Use ``Bayesian optimization`` (Optuna, Ray Tune) for >3 hyperparameters
+5. ``Validate every 500 steps`` with 10% holdout data
 
 **Example Configuration (7B LLM w/QLoRA):**
 ```yaml
@@ -284,40 +284,40 @@ target_modules: [q_proj, v_proj]
 
 Estimate resources using this framework:
 
-1.  ··Model Size Considerations··:
+1.  ``Model Size Considerations``:
     *   **Parameter Count**: Primary cost driver
     *   **Precision**: FP32 (4 bytes/param), FP16 (2 bytes), Int8 (1 byte), Int4 (0.5 bytes)
 
-2.  ··GPU Memory Formula··:
+2.  ``GPU Memory Formula``:
 ```
 Total VRAM ≈ (Model Params × Bytes/Param) + (Batch Size × Seq Len × Hidden Size × 10)
 ```
-··Breakdown··:
+``Breakdown``:
 *   Model weights: 7B FP16 = 14GB
 *   Gradients: 7B × 2 bytes = 14GB
 *   Optimizer states: 7B × 4 bytes (Adam) = 28GB
 *   **Total FP16 training**: 14+14+28 = 56GB (→ Requires A100 80GB)
 
-3.  ··Memory Reduction Techniques··:
+3.  ``Memory Reduction Techniques``:
 *   **Quantization**: QLoRA reduces 7B→ 5GB VRAM
 *   **ZeRO Stages**: 
     - Stage 2: Offloads gradients (30% savings)
     - Stage 3: Offloads weights+optimizer (enables 30B+ on consumer GPUs)
 
-4.  ··Compute Time Estimation··:
+4.  ``Compute Time Estimation``:
 ```Total Hours = (Tokens in Dataset × Parameters × 6) / (GPU FLOPs × Utilization)```
 
-··Example··: 1B tokens, 7B model, A100 (312 TFLOPS):
+``Example``: 1B tokens, 7B model, A100 (312 TFLOPS):
 `(1e9 × 7e9 × 6) / (312e12 × 0.3) ≈ 45 hours`
 
-5.  ··Cost Calculation··:
+5.  ``Cost Calculation``:
 *   Cloud Hourly Rate × Total Hours (e.g., `3/hr × 45h = `135)
 *   **Full Fine-Tuning Costs**: 
     - 7B: `200-`1,000
     - 13B: `500-`2,500
     - 70B: `5,000-`20,000
 
-6.  ··Storage Requirements··:
+6.  ``Storage Requirements``:
 *   Dataset: 0.5-5GB
 *   Checkpoints: Model Size × 3 (weights/opt/grad) × Save Frequency
 
@@ -343,27 +343,27 @@ E -->|No| G[Cloud Spot Instances]
 
 Use these techniques for resource-constrained environments (≤24GB VRAM):
 
-1.  ··Model Selection··:
+1.  ``Model Selection``:
     *   Models ≤13B parameters (e.g., Mistral-7B, LLaMA-2-7B)
     *   Pre-quantized versions (GPTQ/AWQ GGML) from HuggingFace Hub
 
-2.  ··QLoRA (Quantized Low-Rank Adaptation)··:
-    *   4-bit quantize base model ··(bitsandbytes)··
-    *   Attach Low-Rank Adapters to ··attention layers·· only
+2.  ``QLoRA (Quantized Low-Rank Adaptation)``:
+    *   4-bit quantize base model ``(bitsandbytes)``
+    *   Attach Low-Rank Adapters to ``attention layers`` only
     *   **VRAM Usage**: 7B model ≈ 6-10GB
 
-3.  ··Library Toolchain··:
+3.  ``Library Toolchain``:
 ```bash
 
 pip install transformers peft accelerate bitsandbytes
 ```
 
-4.  ··Key Configurations··:
+4.  ``Key Configurations``:
 *   Load model in 4-bit: `load_in_4bit=True`
-*   LoRA rank: 8-64 ··(higher=better performance/more VRAM)··
-*   Batch size: 1-4 ··(use gradient accumulation for larger batches)··
+*   LoRA rank: 8-64 ``(higher=better performance/more VRAM)``
+*   Batch size: 1-4 ``(use gradient accumulation for larger batches)``
 
-5.  ··Training Script··:
+5.  ``Training Script``:
 ```python
 from peft import LoraConfig, get_peft_model
 
@@ -380,28 +380,28 @@ model = get_peft_model(model, peft_config)
 trainer = Trainer(model=model, args=training_args, train_dataset=dataset)
 trainer.train()
 ```
-6.  ··Performance Optimizations··:
+6.  ``Performance Optimizations``:
 *   **Gradient Accumulation**: Steps=4-8 to simulate batch size 16-64
 *   **Flash Attention-2**: 30% speedup (requires compatible GPUs)
 *   **CPU Offloading**: Offload non-critical components to RAM
 
-7.  ··Hardware Recommendations··:
+7.  ``Hardware Recommendations``:
 | GPU         | VRAM   | Max Model | Batch Size | Train Speed |
 |-------------|--------|-----------|------------|-------------|
 | RTX 3090    | 24GB   | 7B QLoRA  | 4          | 1.5 it/s    |
 | RTX 4090    | 24GB   | 13B QLoRA | 2          | 0.8 it/s    |
 | 2×RTX 3090  | 48GB   | 13B FSDP  | 8          | 2.2 it/s    |
 
-8.  ··Post-Training Quantization··: 
+8.  ``Post-Training Quantization``: 
 *   GGML/GGUF quantization for CPU inference
 *   AWQ quantization for GPU deployment
 
 **Workflow for 24GB GPU (7B Model)**:
-1. Convert dataset to ··ChatML format··
-2. Apply ··4-bit quantization·· via bitsandbytes
-3. Configure ··LoRA with rank=32·· on attention layers
-4. Train with ··batch size=4, accumulation steps=8·· (effective bs=32)
-5. Save ··adapter weights only·· (5-200MB)
+1. Convert dataset to ``ChatML format``
+2. Apply ``4-bit quantization`` via bitsandbytes
+3. Configure ``LoRA with rank=32`` on attention layers
+4. Train with ``batch size=4, accumulation steps=8`` (effective bs=32)
+5. Save ``adapter weights only`` (5-200MB)
 6. Merge adapters with base model for inference
 
 # What are the different categories of the PEFT method?
