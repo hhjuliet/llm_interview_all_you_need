@@ -88,12 +88,12 @@ C -->|Base model Succeeds| E[No Fine-tuning Needed]
   - Overfitting prevention
 
 ### 3. Compare Alternatives
-| Technique               | Effort   | Cost    | Use Case                  |
-|-------------------------|----------|---------|---------------------------|
-| Zero-shot Prompting      | Low      | `       | Simple Q&A                |
-| Few-shot Prompting       | Medium   | ``      | Pattern-based tasks       |
-| Retrieval-Augmentation | Medium   | ```     | Dynamic knowledge needs   |
-| **Fine-tuning**          | **High** | **````**| **Specialized behaviors** |
+| Technique               | Effort   | Cost     | Use Case                  |
+|-------------------------|----------|----------|---------------------------|
+| Zero-shot Prompting      | Low      | $        | Simple Q&A                |
+| Few-shot Prompting       | Medium   | $$       | Pattern-based tasks       |
+| Retrieval-Augmentation | Medium   | $$$      | Dynamic knowledge needs   |
+| **Fine-tuning**          | **High** | **$$$$** | **Specialized behaviors** |
 
 ### 4. Conduct Feasibility Testing
 1. Run baseline tests with prompt engineering
